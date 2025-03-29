@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricket Game</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-header">
+            <h1>Cricket Game</h1>
+            <div class="game-stats">
+                <span>Score: <span id="score">0</span>/<span id="wickets">0</span></span>
+                <span>Overs: <span id="overs">0.0</span></span>
+            </div>
+        </div>
+        
+        <canvas id="gameCanvas"></canvas>
+        
+        <div class="game-controls">
+            <div class="batting-controls">
+                <button id="defensiveBtn" class="control-btn">Defensive</button>
+                <button id="normalBtn" class="control-btn">Normal</button>
+                <button id="aggressiveBtn" class="control-btn">Aggressive</button>
+            </div>
+            <div class="bowling-controls">
+                <button id="fastBtn" class="control-btn">Fast</button>
+                <button id="mediumBtn" class="control-btn">Medium</button>
+                <button id="spinBtn" class="control-btn">Spin</button>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>How to Play</h3>
+            <p>Choose batting style (Defensive/Normal/Aggressive) to face the ball</p>
+            <p>Choose bowling style (Fast/Medium/Spin) to bowl</p>
+            <p>Try to score runs while avoiding wickets!</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="game.js"></script>
+</body>
+</html> 

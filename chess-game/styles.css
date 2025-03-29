@@ -1,0 +1,190 @@
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #34495e;
+    --light-color: #ecf0f1;
+    --dark-color: #2c3e50;
+    --accent-color: #3498db;
+    --board-light: #ff6b6b;
+    --board-dark: #4834d4;
+    --highlight-color: rgba(52, 152, 219, 0.3);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--light-color);
+    color: var(--dark-color);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.game-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.game-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.game-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.player-turn {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.captured-pieces {
+    display: flex;
+    gap: 2rem;
+}
+
+.captured-pieces h4 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+#white-captured-pieces,
+#black-captured-pieces {
+    display: flex;
+    gap: 0.5rem;
+    min-height: 30px;
+}
+
+.game-board {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+#chessboard {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    width: 560px;
+    height: 560px;
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.square {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.square.light {
+    background-color: var(--board-light);
+}
+
+.square.dark {
+    background-color: var(--board-dark);
+}
+
+.square.highlighted {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.square.selected {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.piece {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.piece:hover {
+    transform: scale(1.1);
+}
+
+.game-controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.btn {
+    padding: 0.5rem 1.5rem;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.captured-piece {
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    color: var(--dark-color);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .game-info {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .captured-pieces {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    #chessboard {
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+        aspect-ratio: 1;
+    }
+
+    .square {
+        width: 50px;
+        height: 50px;
+    }
+
+    .piece {
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
+    }
+} 

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siri's Dream - BMW for Parents</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #1a1a1a;
+        }
+        canvas {
+            border: 2px solid #333;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="dreamCanvas" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('dreamCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Car animation properties
+        let carProgress = 0;
+        const carSpeed = 0.002;
+        const carRotation = 0;
+
+        // Star animation properties
+        const stars = Array.from({length: 100}, () => ({
+            x: Math.random() * canvas.width,
+            y: Math.random() * (canvas.height / 2),
+            size: Math.random() * 2,
+            speed: Math.random() * 0.5 + 0.2
+        }));
+
+        // Calculate car position on the path
+        function getCarPosition(progress) {
+            const t = progress;
+            const startX = 300;
+            const startY = 400;
+            const controlX1 = 400;
+            const controlY1 = 300;
+            const controlX2 = 500;
+            const controlY2 = 200;
+            const endX = 600;
+            const endY = 300;
+
+            // Bezier curve calculation
+            const x = Math.pow(1-t, 3) * startX + 
+                     3 * Math.pow(1-t, 2) * t * controlX1 + 
+                     3 * (1-t) * Math.pow(t, 2) * controlX2 + 
+                     Math.pow(t, 3) * endX;
+            
+            const y = Math.pow(1-t, 3) * startY + 
+                     3 * Math.pow(1-t, 2) * t * controlY1 + 
+                     3 * (1-t) * Math.pow(t, 2) * controlY2 + 
+                     Math.pow(t, 3) * endY;
+
+            // Calculate rotation based on path direction
+            const nextX = Math.pow(1-(t+0.01), 3) * startX + 
+                         3 * Math.pow(1-(t+0.01), 2) * (t+0.01) * controlX1 + 
+                         3 * (1-(t+0.01)) * Math.pow(t+0.01, 2) * controlX2 + 
+                         Math.pow(t+0.01, 3) * endX;
+            
+            const nextY = Math.pow(1-(t+0.01), 3) * startY + 
+                         3 * Math.pow(1-(t+0.01), 2) * (t+0.01) * controlY1 + 
+                         3 * (1-(t+0.01)) * Math.pow(t+0.01, 2) * controlY2 + 
+                         Math.pow(t+0.01, 3) * endY;
+
+            const angle = Math.atan2(nextY - y, nextX - x);
+            return { x, y, angle };
+        }
+
+        // Draw sky gradient
+        function drawSky() {
+            const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            gradient.addColorStop(0, '#1e3c72');
+            gradient.addColorStop(1, '#2a5298');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // Draw animated stars
+        function drawStars() {
+            ctx.fillStyle = '#fff';
+            stars.forEach(star => {
+                star.y += star.speed;
+                if (star.y > canvas.height) {
+                    star.y = 0;
+                    star.x = Math.random() * canvas.width;
+                }
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                ctx.fill();
+            });
+        }
+
+        // Draw mountains with snow
+        function drawMountains() {
+            // Main mountains
+            ctx.fillStyle = '#2c3e50';
+            ctx.beginPath();
+            ctx.moveTo(0, canvas.height);
+            ctx.lineTo(200, 300);
+            ctx.lineTo(400, canvas.height);
+            ctx.lineTo(600, 200);
+            ctx.lineTo(800, canvas.height);
+            ctx.closePath();
+            ctx.fill();
+
+            // Snow caps
+            ctx.fillStyle = '#fff';
+            ctx.beginPath();
+            ctx.moveTo(180, 320);
+            ctx.lineTo(200, 300);
+            ctx.lineTo(220, 320);
+            ctx.closePath();
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.moveTo(580, 220);
+            ctx.lineTo(600, 200);
+            ctx.lineTo(620, 220);
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        // Draw BMW convertible
+        function drawBMW(x, y, angle) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(angle);
+
+            // Car body
+            ctx.fillStyle = '#0066cc';
+            ctx.beginPath();
+            ctx.moveTo(-100, 0);
+            ctx.lineTo(100, 0);
+            ctx.lineTo(120, -20);
+            ctx.lineTo(-120, -20);
+            ctx.closePath();
+            ctx.fill();
+
+            // Convertible roof (down)
+            ctx.beginPath();
+            ctx.moveTo(-80, -20);
+            ctx.lineTo(80, -20);
+            ctx.lineTo(60, -50);
+            ctx.lineTo(-60, -50);
+            ctx.closePath();
+            ctx.fill();
+
+            // Headlights
+            ctx.fillStyle = '#fff';
+            ctx.beginPath();
+            ctx.arc(-90, -15, 5, 0, Math.PI * 2);
+            ctx.arc(90, -15, 5, 0, Math.PI * 2);
+            ctx.fill();
+
+            // BMW logo
+            ctx.fillStyle = '#fff';
+            ctx.beginPath();
+            ctx.arc(0, -35, 15, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.strokeStyle = '#0066cc';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(-15, -35);
+            ctx.lineTo(15, -35);
+            ctx.moveTo(0, -50);
+            ctx.lineTo(0, -20);
+            ctx.stroke();
+
+            // Wheels with rims
+            ctx.fillStyle = '#333';
+            ctx.beginPath();
+            ctx.arc(-60, 0, 15, 0, Math.PI * 2);
+            ctx.arc(60, 0, 15, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Wheel rims
+            ctx.fillStyle = '#fff';
+            ctx.beginPath();
+            ctx.arc(-60, 0, 8, 0, Math.PI * 2);
+            ctx.arc(60, 0, 8, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.restore();
+        }
+
+        // Draw family in car
+        function drawFamily(x, y, angle) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(angle);
+
+            // Parents in car
+            ctx.fillStyle = '#2ecc71';
+            // Father (driver)
+            ctx.beginPath();
+            ctx.arc(-30, -30, 15, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillRect(-40, -15, 20, 30);
+            ctx.fillRect(-50, -10, 10, 20);
+            ctx.fillRect(-30, -10, 10, 20);
+
+            // Mother (passenger)
+            ctx.beginPath();
+            ctx.arc(30, -30, 15, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillRect(20, -15, 20, 30);
+            ctx.fillRect(10, -10, 10, 20);
+            ctx.fillRect(30, -10, 10, 20);
+
+            ctx.restore();
+        }
+
+        // Draw world map path with landmarks
+        function drawWorldPath() {
+            ctx.strokeStyle = '#f1c40f';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(300, 400);
+            ctx.bezierCurveTo(400, 300, 500, 200, 600, 300);
+            ctx.stroke();
+
+            // Draw landmarks
+            const landmarks = [
+                {x: 350, y: 350, name: 'Home'},
+                {x: 450, y: 250, name: 'Adventure'},
+                {x: 550, y: 350, name: 'Dreams'}
+            ];
+
+            landmarks.forEach(landmark => {
+                ctx.fillStyle = '#f1c40f';
+                ctx.beginPath();
+                ctx.arc(landmark.x, landmark.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#fff';
+                ctx.font = '12px Arial';
+                ctx.fillText(landmark.name, landmark.x - 20, landmark.y - 10);
+            });
+        }
+
+        // Draw text with quotes
+        function drawText() {
+            ctx.fillStyle = '#fff';
+            ctx.font = 'bold 24px Arial';
+            ctx.fillText("Siri's Dream: BMW for Parents' World Travel", 200, 100);
+            
+            ctx.font = 'italic 18px Arial';
+            ctx.fillText('Making dreams come true, one mile at a time', 250, 150);
+
+            // Additional inspirational quotes
+            const quotes = [
+                "The journey of a thousand miles begins with a single step",
+                "Family is not an important thing. It's everything.",
+                "Adventure is worthwhile in itself."
+            ];
+
+            quotes.forEach((quote, index) => {
+                ctx.font = 'italic 14px Arial';
+                ctx.fillStyle = `rgba(255, 255, 255, ${0.8 - index * 0.2})`;
+                ctx.fillText(quote, 250, 200 + index * 25);
+            });
+        }
+
+        // Draw Siri waving goodbye
+        function drawSiri() {
+            ctx.fillStyle = '#e74c3c';
+            ctx.beginPath();
+            ctx.arc(350, 450, 20, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillRect(340, 470, 20, 40);
+            ctx.fillRect(330, 480, 10, 30);
+            ctx.fillRect(360, 480, 10, 30);
+
+            // Draw heart emoji
+            ctx.fillStyle = '#e74c3c';
+            ctx.beginPath();
+            ctx.moveTo(400, 420);
+            ctx.bezierCurveTo(400, 420, 420, 400, 420, 420);
+            ctx.bezierCurveTo(420, 440, 400, 460, 400, 420);
+            ctx.bezierCurveTo(400, 460, 380, 440, 380, 420);
+            ctx.bezierCurveTo(380, 400, 400, 420, 400, 420);
+            ctx.fill();
+        }
+
+        // Main drawing function
+        function draw() {
+            drawSky();
+            drawStars();
+            drawMountains();
+            drawWorldPath();
+            
+            // Update car position
+            carProgress += carSpeed;
+            if (carProgress >= 1) carProgress = 0;
+            
+            const carPos = getCarPosition(carProgress);
+            drawBMW(carPos.x, carPos.y, carPos.angle);
+            drawFamily(carPos.x, carPos.y, carPos.angle);
+            
+            drawSiri();
+            drawText();
+        }
+
+        // Start animation
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            draw();
+            requestAnimationFrame(animate);
+        }
+
+        // Start the animation
+        animate();
+    </script>
+</body>
+</html> 

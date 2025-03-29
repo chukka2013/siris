@@ -1,0 +1,285 @@
+:root {
+    --primary-color: #FF6B6B;
+    --secondary-color: #4ECDC4;
+    --dark-color: #2D3436;
+    --light-color: #F8F9FA;
+    --accent-color: #A8E6CF;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--light-color);
+    color: var(--dark-color);
+}
+
+/* Navbar */
+.navbar {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    padding: 1rem 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav-link {
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--accent-color) !important;
+}
+
+/* Hero Section */
+.hero {
+    padding: 8rem 0 4rem;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    color: var(--dark-color);
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: #666;
+}
+
+.hero-image img {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+}
+
+.hero-image img:hover {
+    transform: scale(1.02);
+}
+
+/* Trending Section */
+.trending {
+    padding: 5rem 0;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 3rem;
+    text-align: center;
+    color: var(--dark-color);
+}
+
+.song-card {
+    margin-bottom: 30px;
+    padding: 15px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.song-card:hover {
+    transform: translateY(-10px);
+}
+
+.song-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.song-info {
+    padding: 15px 0;
+    text-align: center;
+}
+
+.song-info h5 {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.song-info p {
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.controls {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Music Player */
+.music-player {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: white;
+    padding: 1rem 0;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.now-playing {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.now-playing img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.song-details h6 {
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+}
+
+.song-details p {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.player-controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.player-controls .btn-link {
+    color: var(--dark-color);
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.player-controls .btn-link:hover {
+    color: var(--primary-color);
+}
+
+.play-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    color: white !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.play-btn:hover {
+    transform: scale(1.1);
+}
+
+.progress {
+    height: 5px;
+    background: #eee;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    background: var(--primary-color);
+    transition: width 0.1s linear;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .hero {
+        padding: 6rem 0 3rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .song-card {
+        margin-bottom: 1.5rem;
+    }
+    
+    .music-player {
+        padding: 0.5rem 0;
+    }
+    
+    .player-controls {
+        gap: 0.5rem;
+    }
+}
+
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.spotify-container {
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 12px;
+}
+
+/* Add these styles to your existing CSS */
+.gaana-embed {
+    position: relative;
+    width: 100%;
+    margin: 20px 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    background: white;
+}
+
+.gaana-embed iframe {
+    width: 100%;
+    border: none;
+    background: white;
+}
+
+/* Make sure the container is responsive */
+@media (max-width: 768px) {
+    .gaana-embed {
+        margin: 10px 0;
+    }
+    
+    .gaana-embed iframe {
+        height: 500px;
+    }
+} 
